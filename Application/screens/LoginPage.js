@@ -7,16 +7,43 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 
+const screenWidth = Dimensions.get('screen').width;
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'gray',
-    },
-    email: {
-        justifyContent: 'center',
-    }
+  container: {
+    flex: 1,
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+  },
+  emailCont: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 50,
+    width: '90%',
+  },
+  passwordCont: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: '90%',
+  },
+  textInputLabels: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginHorizontal: 25,
+  },
+  textInput: {
+    paddingHorizontal: 25,
+    alignSelf: 'flex-end',
+  },
 });
 
 export default class LoginPage extends Component {
@@ -25,6 +52,7 @@ export default class LoginPage extends Component {
     this.state = {
       email: '',
       password: '',
+      authenticationToken: '',
       isLoggedIn: false,
     };
   }
@@ -41,24 +69,32 @@ export default class LoginPage extends Component {
         password: this.state.password,
       }),
     })
-      .then(response => {
-        Alert.alert('Logged In!');
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('RESPONSE HERE -' + responseJson);
         this.setState({
-          isLoggedIn: true,
+          authenticationToken: responseJson.token,
         });
-        console.log(this.state.isLoggedIn);
-        this.props.navigation.navigate('Chittr');
+
+        if (this.state.authenticationToken != null) {
+          alert('Error 400');
+        } else {
+          console.log(
+            'Login Success!' +
+              this.state.responseCode +
+              '+' +
+              this.state.authenticationToken,
+          );
+          this.setState({isLoggedIn: true});
+          this.props.navigation.navigate('Chittr');
+        }
       })
       .catch(error => {
         // console.error(error);
         console.log(this.state.email, this.state.password);
         console.log(this.state.isLoggedIn);
-        Alert.alert(
-          'Incorrect email / Password.' +
-            '\n email=' +
-            this.state.email +
-            ' Password=' +
-            this.state.password,
+        alert(
+          'Error trying to sign in.\nPlease enter Username and Passsword\nCorrectly.',
         );
       });
   }
@@ -67,19 +103,23 @@ export default class LoginPage extends Component {
       // Container
       <View style={styles.container}>
         {/* Email */}
-        <View style={styles.email}>
-          <Text>Email</Text>
+        <View style={styles.emailCont}>
+          <Text style={styles.textInputLabels}>Email</Text>
           <TextInput
+            style={styles.textInput}
             placeholder="Please Enter Your Email"
+            multiline={true}
             // value={this.state.email}
             onChangeText={email => this.setState({email})}
           />
         </View>
         {/* Password */}
-        <View style={styles.password}>
-          <Text>Password</Text>
+        <View style={styles.passwordCont}>
+          <Text style={styles.textInputLabels}>Password</Text>
           <TextInput
+            style={styles.textInput}
             placeholder="Please Enter Your Password"
+            multiline={true}
             // value={this.state.password}
             onChangeText={password => this.setState({password})}
           />

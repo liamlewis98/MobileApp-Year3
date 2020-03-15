@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createStackNavigator, HeaderBackground} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
 // HeaderStyling
@@ -70,6 +70,8 @@ function HomePage({navigation}) {
         options={{
           headerTitle: 'Login Page',
           headerTitleAlign: 'center',
+          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
       <StackNav.Screen
@@ -77,6 +79,9 @@ function HomePage({navigation}) {
         component={Profile}
         options={{
           headerTitle: 'Profile Page',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
     </StackNav.Navigator>
