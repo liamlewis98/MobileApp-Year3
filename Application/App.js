@@ -1,9 +1,18 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator, HeaderBackground} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
+// HeaderStyling
+const styles = StyleSheet.create({
+  HeaderButtons: {
+    paddingHorizontal: 20,
+    height: '100%',
+    justifyContent: 'center',
+  },
+});
 // Pages
 import Home from './screens/HomePage';
 import Login from './screens/LoginPage';
@@ -34,16 +43,23 @@ function HomePage({navigation}) {
         component={Home}
         options={{
           // Title
-          headerTitle: 'Chittr', // Style me later.
+          headerTitle: 'Chittr',
           headerTitleAlign: 'center',
-
+          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerStyle: {backgroundColor: '#D3D3D3'},
           // Left Button
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.HeaderButtons}
+              onPress={() => navigation.navigate('LoginPage')}>
+              <Text>Login Page</Text>
+            </TouchableOpacity>
+          ),
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('LoginPage', {screen: 'LoginPage'})
-              }>
-              <Text>Press ME!</Text>
+              style={styles.HeaderButtons}
+              onPress={() => navigation.openDrawer()}>
+              <Text>Menu Icon</Text>
             </TouchableOpacity>
           ),
         }}
@@ -56,17 +72,13 @@ function HomePage({navigation}) {
           headerTitleAlign: 'center',
         }}
       />
+      <StackNav.Screen
+        name="ProfilePage"
+        component={Profile}
+        options={{
+          headerTitle: 'Profile Page',
+        }}
+      />
     </StackNav.Navigator>
   );
 }
-const LoginPage = () => {
-  return (
-    <StackNav.Screen
-      name="LoginPage"
-      component={Login}
-      options={{
-        headerTitle: 'Login Page',
-      }}
-    />
-  );
-};
