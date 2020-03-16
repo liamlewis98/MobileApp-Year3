@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -16,7 +22,7 @@ const styles = StyleSheet.create({
 // Pages
 import Home from './screens/HomePage';
 import Login from './screens/LoginPage';
-import Profile from './screens/HomePage';
+import Profile from './screens/ProfilePage';
 
 // Navs
 const StackNav = createStackNavigator();
@@ -24,11 +30,12 @@ const DrawNav = createDrawerNavigator();
 
 // Navigation
 // Drawer - Calls stack nav.
-export default function Drawer() {
+export default function Drawer({navigation}) {
   return (
     <NavigationContainer>
       <DrawNav.Navigator initialRouteName="HomePage">
         <DrawNav.Screen name="Home Page" component={HomePage} />
+        <DrawNav.Screen name="Profile Page" component={Profile} />
       </DrawNav.Navigator>
     </NavigationContainer>
   );

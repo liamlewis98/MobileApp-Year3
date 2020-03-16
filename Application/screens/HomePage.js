@@ -69,8 +69,8 @@ export default class HomePage extends Component {
       isLoading: true,
       chits: [],
     };
+    global.ThingToPass = 'WordsWordsWords';
   }
-
   getChits() {
     fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {method: 'GET'})
       .then(response => response.json())
@@ -84,11 +84,9 @@ export default class HomePage extends Component {
         });
       });
   } // getChit
-
   componentDidMount() {
     this.getChits();
   }
-
   render() {
     if (this.state.isLoading === true) {
       return (
@@ -102,6 +100,18 @@ export default class HomePage extends Component {
     return (
       // Container
       <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() =>
+            console.log(
+              'Main Page - ' +
+                global.AuthToken +
+                '\nLogged in state = ' +
+                global.LoggedIn,
+            )
+          }>
+          <Text>Press me to reveal auth token for debugging in console.</Text>
+        </TouchableOpacity>
+        {/* <Text>Authentication Token is: {data}</Text> */}
         {/* FlatList */}
         <View>
           <FlatList

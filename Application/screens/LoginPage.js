@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView
 } from 'react-native';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -53,10 +54,14 @@ export default class LoginPage extends Component {
       email: '',
       password: '',
       authenticationToken: '',
-      isLoggedIn: false,
     };
+    global.AuthToken = '';
+    global.LoggedIn = false;
   }
-
+  // var authentication = '';
+  changeScreen() {
+    this.props.navigation.navigate('Chittr');
+  }
   loginUser() {
     return fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
       method: 'POST',
@@ -71,22 +76,21 @@ export default class LoginPage extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log('RESPONSE HERE -' + responseJson);
+        // console.log('RESPONSE HERE -' + responseJson);
         this.setState({
           authenticationToken: responseJson.token,
+          // authenticationToken: JSON.stringify(responseJson.token),
         });
+        console.log(this.state.authenticationToken);
+        global.AuthToken = this.state.authenticationToken;
+        console.log('The global variable = ' + global.AuthToken);
 
-        if (this.state.authenticationToken != null) {
+        if (this.state.authenticationToken === null) {
           alert('Error 400');
         } else {
-          console.log(
-            'Login Success!' +
-              this.state.responseCode +
-              '+' +
-              this.state.authenticationToken,
-          );
-          this.setState({isLoggedIn: true});
-          this.props.navigation.navigate('Chittr');
+          console.log('Login Success!' + this.state.authenticationToken);
+          global.LoggedIn = true;
+          this.changeScreen();
         }
       })
       .catch(error => {
@@ -101,15 +105,15 @@ export default class LoginPage extends Component {
   render() {
     return (
       // Container
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         {/* Email */}
         <View style={styles.emailCont}>
           <Text style={styles.textInputLabels}>Email</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Please Enter Your Email"
-            multiline={true}
-            // value={this.state.email}
+            maxLength={30}
+            value={this.state.email}
             onChangeText={email => this.setState({email})}
           />
         </View>
@@ -119,15 +123,17 @@ export default class LoginPage extends Component {
           <TextInput
             style={styles.textInput}
             placeholder="Please Enter Your Password"
-            multiline={true}
-            // value={this.state.password}
+            // multiline={true}
+            secureTextEntry
+            value={this.state.password}
+            maxLength={20}
             onChangeText={password => this.setState({password})}
           />
         </View>
         <TouchableOpacity onPress={() => this.loginUser()}>
           <Text>Login</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

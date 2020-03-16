@@ -11,7 +11,9 @@ export default class ProfilePage extends Component {
   render() {
     return (
       <View>
-        <Text> User Profle Page </Text>
+        <Text>Hello Profile Page World</Text>
+        <Text>{global.ThingToPass}</Text>
+        <Text>{global.LogInResponse}</Text>
       </View>
     );
   }
