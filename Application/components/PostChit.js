@@ -1,0 +1,95 @@
+/* eslint-disable react-native/no-inline-styles */
+// Will be a modal that will handle the posting of the chit.
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  TextInput,
+  Modal,
+} from 'react-native';
+
+const screenHeight = Dimensions.get('screen').height;
+const screenWidth = Dimensions.get('screen').width;
+
+const styles = StyleSheet.create({
+  bottomBar: {
+    height: screenHeight * 0.1,
+    borderRadius: 100,
+    backgroundColor: 'transparent',
+    alignItems: 'flex-end',
+  },
+  newChitButton: {
+    height: '80%',
+    width: '80%',
+    borderRadius: 100,
+    borderWidth: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginRight: 20,
+  },
+  modal: {
+    width: 200,
+    height: 100,
+  },
+});
+
+export default class postChit extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      chitToPost: '',
+      modalVisibility: false,
+    };
+  } // Constructor
+
+  // Modal Options
+  openModal() {
+    this.setState({
+      modalVisibility: true,
+    });
+  }
+  closeModal() {
+    this.setState({
+      modalVisibility: false,
+    });
+  }
+
+  render() {
+    return (
+      // Container
+      <View style={{backgroundColor: 'white'}}>
+        <View style={styles.bottomBar}>
+          <TouchableOpacity
+            onPress={() => this.openModal()}
+            style={styles.newChitButton}>
+            <Text style={{fontSize: 32}}>Post</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Modal Container */}
+        <View>
+          {/* Modal */}
+          <Modal
+            visible={this.state.modalVisibility}
+            style={{backgroundColor: 'blue'}}>
+            <TouchableOpacity onPress={() => this.closeModal()}>
+              <Text>Close Modal</Text>
+            </TouchableOpacity>
+            <Text>Post Your Chit!</Text>
+            <TextInput
+              placeholder="Talk about your day?"
+              onChangeText={chitToPost => this.setState({chitToPost})}
+              multiline={true}
+              maxLength={141}
+            />
+          </Modal>
+        </View>
+      </View>
+    );
+  }
+}

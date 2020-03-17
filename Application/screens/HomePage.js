@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   Text,
@@ -12,6 +13,9 @@ import {
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
+
+import PostChit from '../components/PostChit';
+
 // Styles
 const styles = StyleSheet.create({
   container: {
@@ -33,34 +37,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: screenWidth * 0.02,
     paddingVertical: screenHeight * 0.01,
   },
-  header: {
-    flexDirection: 'row',
-    backgroundColor: 'cyan',
-    borderWidth: 1,
-    height: screenHeight * 0.1,
-  },
-  loginBtn: {
-    flex: 1,
-    backgroundColor: 'white',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menuBtn: {
-    flex: 1,
-    backgroundColor: 'white',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomBar: {
-    height: screenHeight * 0.1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
+
+var LoggedIn = false;
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -69,7 +48,21 @@ export default class HomePage extends Component {
       isLoading: true,
       chits: [],
     };
-    global.ThingToPass = 'WordsWordsWords';
+  }
+  checkState() {
+    if (global.LoggedIn === true) {
+      LoggedIn = true;
+      console.log(
+        'Global Authentication Key - ' +
+          global.AuthToken +
+          '\nLogged in global state = ' +
+          global.LoggedIn +
+          '\nLogged in local state = ' +
+          LoggedIn,
+      );
+    } else {
+      alert('Something went wrong.');
+    }
   }
   getChits() {
     fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {method: 'GET'})
@@ -101,19 +94,16 @@ export default class HomePage extends Component {
       // Container
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() =>
-            console.log(
-              'Main Page - ' +
-                global.AuthToken +
-                '\nLogged in state = ' +
-                global.LoggedIn,
-            )
-          }>
-          <Text>Press me to reveal auth token for debugging in console.</Text>
+          style={{alignSelf: 'center', marginTop: 10, justifyContent: 'center'}}
+          onPress={() => this.checkState()}>
+          <Text>
+            Press me to reveal auth token and logged in state for debugging in
+            console.
+          </Text>
         </TouchableOpacity>
-        {/* <Text>Authentication Token is: {data}</Text> */}
+
         {/* FlatList */}
-        <View>
+        <View style={styles.container}>
           <FlatList
             data={this.state.chits}
             renderItem={({item}) => (
@@ -124,12 +114,7 @@ export default class HomePage extends Component {
             keyExtractor ={({id}, index) => id}
           </FlatList>
         </View>
-        {/* Button to add chit */}
-        <View>
-          <TouchableOpacity style={{borderWidth: 1}}>
-            <Text>Change Me</Text>
-          </TouchableOpacity>
-        </View>
+        <View>{global.LoggedIn ? <PostChit /> : null}</View>
       </View>
     );
   }

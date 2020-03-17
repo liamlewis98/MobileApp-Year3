@@ -1,12 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -19,6 +13,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// Components
+
 // Pages
 import Home from './screens/HomePage';
 import Login from './screens/LoginPage';
@@ -43,6 +40,7 @@ export default function Drawer({navigation}) {
 
 // Stack Pages
 function HomePage({navigation}) {
+  const IsLoggedIn = global.LoggedIn;
   return (
     <StackNav.Navigator>
       <StackNav.Screen
@@ -58,8 +56,12 @@ function HomePage({navigation}) {
           headerRight: () => (
             <TouchableOpacity
               style={styles.HeaderButtons}
-              onPress={() => navigation.navigate('LoginPage')}>
-              <Text>Login Page</Text>
+              onPress={() => {
+                IsLoggedIn
+                  ? navigation.navigate('ProfilePage')
+                  : navigation.navigate('LoginPage');
+              }}>
+              <Text>{IsLoggedIn ? 'Profile Page' : 'Login Page'}</Text>
             </TouchableOpacity>
           ),
           headerLeft: () => (
@@ -89,6 +91,16 @@ function HomePage({navigation}) {
           headerTitleAlign: 'center',
           headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
+          // Right Button
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.HeaderButtons}
+              onPress={() => (
+                navigation.navigate('Chittr'), (global.LoggedIn = false)
+              )}>
+              <Text>Logout</Text>
+            </TouchableOpacity>
+          ),
         }}
       />
     </StackNav.Navigator>
