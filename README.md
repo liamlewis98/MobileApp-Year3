@@ -16,10 +16,10 @@ Of course, [PROJECT_NAME] is just a placeholder, this is what your application w
 **NOTE** Please keep this terminal open as it will be used later.
 
 # 1.3. Opening up your App
-Inside of Android Studio, open up a new project [Insert Image of me doing it] and select the Application file inside the newly created project, and open it!
+Inside of Android Studio, open up a new project and select the Application file inside the newly created project, and open it! As you can see in the image below, I'm adding the project in my route to the file. ![ShowcaseCMD](./readme-images/makingNewProject.png)
 
 ## Running the emulator
-Once you have loaded the correct file and waited for the gradle build to complete, at the top you should see a drop down box at the top, and inside that box there should be an option to 'Open AVD Manager'. Create a new emulator and choose which phone you wish (I used the Google Pixel for this project).
+Once you have loaded the correct file and waited for the gradle build to complete, at the top you should see a drop down box at the top, and inside that box there should be an option to 'Open AVD Manager'. Create a new emulator and choose which phone you wish (I used the Google Pixel for this project). See Image: ![ShowcaseAVDManager](./readme-images/howToFindOutAVD.png)
 
 # 1.4 Running the app on the emulator
 Now for the main part! Once the emulator has fully booted up and you can see the devices home screen, back in your terminal which is directed to the folder where you created the application, navigate into the new folder you created then type the following:
