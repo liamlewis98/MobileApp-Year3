@@ -50,7 +50,7 @@ export default class HomePage extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      chits: [],
+      recent_chits: [],
       t: 1,
     };
     global.UserId = '';

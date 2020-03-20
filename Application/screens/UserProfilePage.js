@@ -54,40 +54,53 @@ export default class ChittrProfile extends Component {
     super(props);
     // States
     this.state = {
-      reload: false,
-      id: '',
-      forename: '',
-      surname: '',
-      email: '',
       isLoading: true,
-      recent_chits: [],
+      chits: [],
     };
   }
-  getUserInfo() {
+
+  getUserInfo(done) {
     fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + global.UserId, {
       method: 'GET',
     })
       .then(response => response.json())
       .then(responseJson => {
-        this.setState({
-          forename: responseJson.given_name,
-          surname: responseJson.family_name,
-          email: responseJson.email,
-          isLoading: false,
-          //   recent_chits: JSON.stringify(responseJson),
-          recent_chits: responseJson,
-        });
-        console.log(responseJson);
-        console.log(responseJson.given_name + ' ' + responseJson.family_name);
-        console.log(responseJson.email);
+        this.setState(
+          {
+            isLoading: false,
+            recent_chits: responseJson,
+          },
+          () => {
+            console.log(responseJson);
+            console.log(
+              responseJson.given_name + ' ' + responseJson.family_name,
+            );
+            console.log(responseJson.email);
+
+            done();
+          },
+        );
       })
       .catch(error => {
         console.log(error);
       }); // getDetails
   }
-  componentDidMount() {
-    this.getUserInfo();
-  }
+
+  getUserChits() {
+    fetch('http://10.0.2.2:3333/api/v0.0.5/user/' + global.UserId, {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        //Debug
+        console.log(responseJson);
+
+        this.setState({
+          isLoading: false,
+          chits: responseJson,
+        });
+      });
+  } // getChits
 
   follow() {
     return (
@@ -103,6 +116,13 @@ export default class ChittrProfile extends Component {
         <Text style={{color: 'red'}}>Unfollow</Text>
       </TouchableOpacity>
     );
+  }
+
+  componentDidMount() {
+    this.getUserInfo(() => {
+      console.log('Completed?');
+    });
+    // console.log(global.UserId);
   }
   render() {
     var following = true;
@@ -120,11 +140,11 @@ export default class ChittrProfile extends Component {
         <View style={{flexDirection: 'column'}}>
           <View style={styles.header_userName}>
             <Text style={{fontSize: 28}}>
-              {this.state.forename} {this.state.surname}
+              {/* {this.state.forename} {this.state.surname} */}
             </Text>
           </View>
           <Text style={{fontSize: 20, textAlign: 'center'}}>
-            {this.state.email}
+            {/* {this.state.email} */}
           </Text>
         </View>
 
@@ -149,7 +169,7 @@ export default class ChittrProfile extends Component {
           data={this.state.recent_chits}
           renderItem={({item}) => (
             <View style={styles.chits}>
-              <Text>Testing</Text>
+              <Text>{item.user.email}</Text>
             </View>
           )}>
           keyExtractor ={({id}, index) => id}

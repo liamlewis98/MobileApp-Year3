@@ -3,6 +3,7 @@ import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 
 // HeaderStyling
@@ -23,6 +24,7 @@ import Users from './screens/UserProfilePage';
 // Navs
 const StackNav = createStackNavigator();
 const DrawNav = createDrawerNavigator();
+const TabNav = createBottomTabNavigator();
 
 // Navigation
 // Drawer - Calls stack nav.
@@ -107,7 +109,7 @@ function ProfileStack({navigation}) {
     <StackNav.Navigator>
       <StackNav.Screen
         name="ProfilePage"
-        component={Profile}
+        component={ProfileTabs}
         options={{
           headerTitle: 'Profile Page',
           headerTitleAlign: 'center',
@@ -117,4 +119,14 @@ function ProfileStack({navigation}) {
       />
     </StackNav.Navigator>
   );
+}
+
+function ProfileTabs({navigation}) {
+  return (
+    <TabNav.Navigator>
+      <TabNav.Screen name="Profile" component={Profile} />
+      <TabNav.Screen name="Followers" component={Profile} />
+      <TabNav.Screen name="Following" component={Profile} />
+    </TabNav.Navigator>
+  )
 }
