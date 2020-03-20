@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
   },
   newChitButton: {
     height: '80%',
-    width: '80%',
+    width: '40%',
     borderRadius: 100,
-    borderWidth: 1,
+    borderWidth: 2,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
@@ -49,9 +49,14 @@ export default class postChit extends Component {
 
   // Modal Options
   openModal() {
-    this.setState({
-      modalVisibility: true,
-    });
+    if (global.LoggedIn === false) {
+      alert('Please log in before posting.');
+      // this.props.navigation.navigate('LoginPage');
+    } else {
+      this.setState({
+        modalVisibility: true,
+      });
+    }
   }
   closeModal() {
     this.setState({
@@ -62,7 +67,7 @@ export default class postChit extends Component {
   render() {
     return (
       // Container
-      <View style={{backgroundColor: 'white'}}>
+      <View style={{backgroundColor: 'transparent'}}>
         <View style={styles.bottomBar}>
           <TouchableOpacity
             onPress={() => this.openModal()}

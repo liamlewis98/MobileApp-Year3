@@ -16,30 +16,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   emailCont: {
-    flexDirection: 'row',
-    borderWidth: 1,
+    // borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    marginBottom: 50,
     width: '90%',
+    paddingTop: 20,
   },
   passwordCont: {
-    flexDirection: 'row',
-    borderWidth: 1,
+    // borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
     width: '90%',
+    paddingTop: 20,
   },
   textInputLabels: {
-    fontSize: 24,
     fontWeight: 'bold',
-    marginHorizontal: 25,
+    marginBottom: 10,
+    fontSize: 24,
   },
   textInput: {
-    paddingHorizontal: 25,
-    alignSelf: 'flex-end',
+    borderWidth: 2,
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: 'silver',
+    width: '100%',
   },
 });
 var myBool = false;
@@ -57,14 +60,14 @@ export default class LoginPage extends Component {
   }
   // var authentication = '';
   changeScreen() {
-    this.props.navigation.navigate('Chittr');
+    this.props.navigation.navigate('HomePage');
   }
   async loginUser() {
     try {
       const response = await fetch('http://10.0.2.2:3333/api/v0.0.5/login', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          // Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -84,7 +87,7 @@ export default class LoginPage extends Component {
         myBool = true;
       }
       if (myBool === true) {
-        console.log('Login Success!' + this.state.authenticationToken);
+        console.log('Login Success! = ' + this.state.authenticationToken);
         global.LoggedIn = true;
         this.changeScreen();
       }

@@ -28,13 +28,17 @@ const styles = StyleSheet.create({
   },
   chits: {
     borderRadius: 20,
+    flex: 1,
     borderWidth: 1,
+    flexDirection: 'row',
     textAlign: 'center',
     backgroundColor: 'silver',
-    marginHorizontal: screenWidth * 0.05,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: screenWidth * 0.02,
     marginVertical: screenHeight * 0.02,
     fontSize: 20,
-    paddingHorizontal: screenWidth * 0.02,
+    // paddingHorizontal: screenWidth * 0.02,
     paddingVertical: screenHeight * 0.01,
   },
 });
@@ -47,7 +51,9 @@ export default class HomePage extends Component {
     this.state = {
       isLoading: true,
       chits: [],
+      t: 1,
     };
+    global.UserId = '';
   }
   checkState() {
     if (global.LoggedIn === true) {
@@ -76,7 +82,12 @@ export default class HomePage extends Component {
           chits: responseJson,
         });
       });
-  } // getChit
+  } // getChits
+  reloadPage() {
+    this.setState({
+      t: 2,
+    });
+  }
   componentDidMount() {
     this.getChits();
   }
@@ -101,20 +112,34 @@ export default class HomePage extends Component {
             console.
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.reloadPage()}>
+          <Text>Reload</Text>
+        </TouchableOpacity>
 
         {/* FlatList */}
         <View style={styles.container}>
           <FlatList
             data={this.state.chits}
             renderItem={({item}) => (
-              <View>
-                <Text style={styles.chits}>{item.chit_content}</Text>
+              <View style={styles.chits}>
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log('From HomePage -- ' + item.user.user_id);
+                    global.UserId = item.user.user_id;
+                    this.props.navigation.navigate('UserPage');
+                  }}
+                  style={{width: '100%', height: '100%'}}>
+                  <Text style={{textAlign: 'center', fontSize: 18}}>
+                    [ID #{item.user.user_id}] - {item.chit_content}
+                    {/* {item.chit_id} */}
+                  </Text>
+                </TouchableOpacity>
               </View>
             )}>
             keyExtractor ={({id}, index) => id}
           </FlatList>
+          {global.LoggedIn ? <PostChit /> : null}
         </View>
-        <View>{global.LoggedIn ? <PostChit /> : null}</View>
       </View>
     );
   }

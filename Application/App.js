@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {Component} from 'react';
+import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -14,12 +14,11 @@ const styles = StyleSheet.create({
   },
 });
 
-// Components
-
 // Pages
 import Home from './screens/HomePage';
 import Login from './screens/LoginPage';
 import Profile from './screens/ProfilePage';
+import Users from './screens/UserProfilePage';
 
 // Navs
 const StackNav = createStackNavigator();
@@ -27,24 +26,38 @@ const DrawNav = createDrawerNavigator();
 
 // Navigation
 // Drawer - Calls stack nav.
-export default function Drawer({navigation}) {
+export default function Drawer() {
   return (
     <NavigationContainer>
-      <DrawNav.Navigator initialRouteName="HomePage">
-        <DrawNav.Screen name="Home Page" component={HomePage} />
-        <DrawNav.Screen name="Profile Page" component={Profile} />
+      <DrawNav.Navigator
+        initialRouteName="HomePage"
+        drawerStyle={{
+          backgroundColor: 'silver',
+          width: '60%',
+          flex: 1,
+        }}
+        drawerContentOptions={{
+          activeBackgroundColor: '#696969',
+          activeTintColor: 'gold',
+          inactiveTintColor: 'white',
+          inactiveBackgroundColor: 'black',
+          // itemStyle: {alignItems: 'center'},
+          labelStyle: {fontWeight: 'bold', fontSize: 18},
+        }}>
+        <DrawNav.Screen name="Home" component={MainStack} />
+        <DrawNav.Screen name="ProfilePage" component={ProfileStack} />
       </DrawNav.Navigator>
     </NavigationContainer>
   );
 }
 
 // Stack Pages
-function HomePage({navigation}) {
-  const IsLoggedIn = global.LoggedIn;
+function MainStack({navigation}) {
+  // var displayModal = global.LogoutVisible;
   return (
     <StackNav.Navigator>
       <StackNav.Screen
-        name="Chittr"
+        name="HomePage"
         component={Home}
         options={{
           // Title
@@ -52,18 +65,19 @@ function HomePage({navigation}) {
           headerTitleAlign: 'center',
           headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
-          // Left Button
+          // Right Button
           headerRight: () => (
             <TouchableOpacity
               style={styles.HeaderButtons}
               onPress={() => {
-                IsLoggedIn
+                global.LoggedIn
                   ? navigation.navigate('ProfilePage')
                   : navigation.navigate('LoginPage');
               }}>
-              <Text>{IsLoggedIn ? 'Profile Page' : 'Login Page'}</Text>
+              <Text>{global.LoggedIn ? 'Profile Page' : 'Login Page'}</Text>
             </TouchableOpacity>
           ),
+          // Left Button
           headerLeft: () => (
             <TouchableOpacity
               style={styles.HeaderButtons}
@@ -83,6 +97,14 @@ function HomePage({navigation}) {
           headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
+      <StackNav.Screen name="UserPage" component={Users} />
+    </StackNav.Navigator>
+  );
+}
+
+function ProfileStack({navigation}) {
+  return (
+    <StackNav.Navigator>
       <StackNav.Screen
         name="ProfilePage"
         component={Profile}
@@ -91,16 +113,6 @@ function HomePage({navigation}) {
           headerTitleAlign: 'center',
           headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
-          // Right Button
-          headerRight: () => (
-            <TouchableOpacity
-              style={styles.HeaderButtons}
-              onPress={() => (
-                navigation.navigate('Chittr'), (global.LoggedIn = false)
-              )}>
-              <Text>Logout</Text>
-            </TouchableOpacity>
-          ),
         }}
       />
     </StackNav.Navigator>
