@@ -58,16 +58,19 @@ export default class ProfilePage extends Component {
       </TouchableOpacity>
     );
   }
-  test() {
-    return <Text>Hello Liam Testing</Text>;
-  }
 
+  getLoggedInDetails() {
+    return fetch(
+      'http:10.0.2.2:3333/api/v0.0.5/user' + global.UserId,
+      method('POST'),
+    );
+  }
   render() {
     return (
       <View>
         <View style={{justifyContent: 'center', alignSelf: 'center'}}>
           <Text style={{fontSize: 32}}>
-            {global.LoggedIn ? this.test() : 'You are not logged in.'}
+            {global.LoggedIn ? 'Hello There!' : 'You are not logged in.'}
           </Text>
         </View>
 

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'gray',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   emailCont: {
     // borderWidth: 1,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     width: '90%',
-    paddingTop: 20,
+    paddingTop: 80,
   },
   passwordCont: {
     // borderWidth: 1,
@@ -43,6 +43,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: 'silver',
     width: '100%',
+  },
+  buttonContainer: {
+    // borderWidth: 2,
+    marginTop: 20,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  bottomButton: {
+    // width: '80%',
+    borderRadius: 100,
+    borderWidth: 2,
+    backgroundColor: 'white',
+    marginBottom: 20,
+  },
+  bottomButtonText: {
+    fontSize: 28,
+    textAlign: 'center',
+    // justifyContent: 'center',
+    fontWeight: 'bold',
   },
 });
 var myBool = false;
@@ -128,9 +147,19 @@ export default class LoginPage extends Component {
             onChangeText={password => this.setState({password})}
           />
         </View>
-        <TouchableOpacity onPress={() => this.loginUser()}>
-          <Text>Login</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.bottomButton}
+            onPress={() => this.loginUser()}>
+            <Text style={styles.bottomButtonText}>Login</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.bottomButton}
+            onPress={() => this.props.navigation.navigate('NewAccount')}>
+            <Text style={styles.bottomButtonText}>Create account here!</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     );
   }

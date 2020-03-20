@@ -42,7 +42,8 @@ export default class postChit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chitToPost: '',
+      timestamp: '',
+      chit_content: '',
       modalVisibility: false,
     };
   } // Constructor
@@ -62,6 +63,49 @@ export default class postChit extends Component {
     this.setState({
       modalVisibility: false,
     });
+  }
+
+  async postChit() {
+    try {
+      const response = await fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {
+        method: 'POST',
+        headers: {
+          // Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': global.AuthToken,
+        },
+        body: JSON.stringify({
+          // chit_id
+          // timestamp
+          // chit_content
+          // location: {}
+          // user: {}
+        }),
+      });
+      const responseJson = await response.json();
+      // console.log('RESPONSE HERE -' + responseJson);
+      this.setState({
+        authenticationToken: responseJson.token,
+      });
+      console.log(this.state.authenticationToken);
+      global.AuthToken = this.state.authenticationToken;
+      console.log('The global variable = ' + global.AuthToken);
+      if (this.state.authenticationToken !== null) {
+        myBool = true;
+      }
+      if (myBool === true) {
+        console.log('Login Success! = ' + this.state.authenticationToken);
+        global.LoggedIn = true;
+        this.changeScreen();
+      }
+    } catch (error) {
+      // console.error(error);
+      console.log(this.state.email, this.state.password);
+      console.log(this.state.isLoggedIn);
+      alert(
+        'Error trying to sign in.\nPlease enter Username and Passsword\nCorrectly.',
+      );
+    }
   }
 
   render() {

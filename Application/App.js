@@ -20,7 +20,7 @@ import Home from './screens/HomePage';
 import Login from './screens/LoginPage';
 import Profile from './screens/ProfilePage';
 import Users from './screens/UserProfilePage';
-
+import NewAccount from './screens/CreateAccountPage';
 // Navs
 const StackNav = createStackNavigator();
 const DrawNav = createDrawerNavigator();
@@ -99,7 +99,26 @@ function MainStack({navigation}) {
           headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
-      <StackNav.Screen name="UserPage" component={Users} />
+      <StackNav.Screen
+        name="UserPage"
+        component={Users}
+        options={{
+          headerTitle: 'Your Page',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerStyle: {backgroundColor: '#D3D3D3'},
+        }}
+      />
+      <StackNav.Screen
+        name="NewAccount"
+        component={NewAccount}
+        options={{
+          headerTitle: 'Create Account',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerStyle: {backgroundColor: '#D3D3D3'},
+        }}
+      />
     </StackNav.Navigator>
   );
 }
@@ -128,5 +147,5 @@ function ProfileTabs({navigation}) {
       <TabNav.Screen name="Followers" component={Profile} />
       <TabNav.Screen name="Following" component={Profile} />
     </TabNav.Navigator>
-  )
+  );
 }
