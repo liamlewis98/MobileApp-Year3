@@ -18,14 +18,14 @@ Of course, [PROJECT_NAME] is just a placeholder, this is what your application w
 # 1.3. Opening up your App
 Inside of Android Studio, open up a new project [Insert Image of me doing it] and select the Application file inside the newly created project, and open it!
 
-## 1.4 Running the emulator
+## Running the emulator
 Once you have loaded the correct file and waited for the gradle build to complete, at the top you should see a drop down box at the top, and inside that box there should be an option to 'Open AVD Manager'. Create a new emulator and choose which phone you wish (I used the Google Pixel for this project).
 
-# 1.5 Running the app on the emulator
+# 1.4 Running the app on the emulator
 Now for the main part! Once the emulator has fully booted up and you can see the devices home screen, back in your terminal which is directed to the folder where you created the application, navigate into the new folder you created then type the following:
 ```bash
 npx react-native run-android
 ```
 
-# 1.6 You're ready to go!
+# 1.5 You're ready to go!
 That is the steps needed to open my project (Or your own) with react-native! In section 2 you can see a detailed description on each page / file that I've created.
