@@ -14,8 +14,6 @@ import {
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
 
-import PostChit from '../components/PostChit';
-
 // Styles
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
   chits: {
     borderRadius: 20,
     flex: 1,
-    borderWidth: 1,
+    borderWidth: 2,
     flexDirection: 'row',
     textAlign: 'center',
     backgroundColor: 'silver',
@@ -138,7 +136,6 @@ export default class HomePage extends Component {
             )}>
             keyExtractor ={({id}, index) => id}
           </FlatList>
-          {global.LoggedIn ? <PostChit /> : null}
         </View>
       </View>
     );

@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    // marginTop: 10,
     marginRight: 20,
   },
   modal: {
-    width: 200,
-    height: 100,
+    maxWidth: 200,
+    maxHeight: 100,
   },
 });
 
@@ -65,49 +65,6 @@ export default class postChit extends Component {
     });
   }
 
-  async postChit() {
-    try {
-      const response = await fetch('http://10.0.2.2:3333/api/v0.0.5/chits', {
-        method: 'POST',
-        headers: {
-          // Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'X-Authorization': global.AuthToken,
-        },
-        body: JSON.stringify({
-          // chit_id
-          // timestamp
-          // chit_content
-          // location: {}
-          // user: {}
-        }),
-      });
-      const responseJson = await response.json();
-      // console.log('RESPONSE HERE -' + responseJson);
-      this.setState({
-        authenticationToken: responseJson.token,
-      });
-      console.log(this.state.authenticationToken);
-      global.AuthToken = this.state.authenticationToken;
-      console.log('The global variable = ' + global.AuthToken);
-      if (this.state.authenticationToken !== null) {
-        myBool = true;
-      }
-      if (myBool === true) {
-        console.log('Login Success! = ' + this.state.authenticationToken);
-        global.LoggedIn = true;
-        this.changeScreen();
-      }
-    } catch (error) {
-      // console.error(error);
-      console.log(this.state.email, this.state.password);
-      console.log(this.state.isLoggedIn);
-      alert(
-        'Error trying to sign in.\nPlease enter Username and Passsword\nCorrectly.',
-      );
-    }
-  }
-
   render() {
     return (
       // Container
@@ -123,9 +80,7 @@ export default class postChit extends Component {
         {/* Modal Container */}
         <View>
           {/* Modal */}
-          <Modal
-            visible={this.state.modalVisibility}
-            style={{backgroundColor: 'blue'}}>
+          <Modal visible={this.state.modalVisibility} style={styles.modal}>
             <TouchableOpacity onPress={() => this.closeModal()}>
               <Text>Close Modal</Text>
             </TouchableOpacity>

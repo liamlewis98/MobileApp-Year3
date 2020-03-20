@@ -84,7 +84,7 @@ function MainStack({navigation}) {
             <TouchableOpacity
               style={styles.HeaderButtons}
               onPress={() => navigation.openDrawer()}>
-              <Text>Menu Icon</Text>
+              <Text>Open Drawer</Text>
             </TouchableOpacity>
           ),
         }}
@@ -95,7 +95,7 @@ function MainStack({navigation}) {
         options={{
           headerTitle: 'Login Page',
           headerTitleAlign: 'center',
-          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerTitleStyle: {fontSize: 30, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
@@ -105,7 +105,7 @@ function MainStack({navigation}) {
         options={{
           headerTitle: 'Your Page',
           headerTitleAlign: 'center',
-          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerTitleStyle: {fontSize: 30, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
@@ -115,7 +115,7 @@ function MainStack({navigation}) {
         options={{
           headerTitle: 'Create Account',
           headerTitleAlign: 'center',
-          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerTitleStyle: {fontSize: 30, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
         }}
       />
@@ -132,8 +132,16 @@ function ProfileStack({navigation}) {
         options={{
           headerTitle: 'Profile Page',
           headerTitleAlign: 'center',
-          headerTitleStyle: {fontSize: 38, fontWeight: 'bold'},
+          headerTitleStyle: {fontSize: 30, fontWeight: 'bold'},
           headerStyle: {backgroundColor: '#D3D3D3'},
+          // Left Button
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.HeaderButtons}
+              onPress={() => navigation.openDrawer()}>
+              <Text>Open Drawer</Text>
+            </TouchableOpacity>
+          ),
         }}
       />
     </StackNav.Navigator>
@@ -142,7 +150,7 @@ function ProfileStack({navigation}) {
 
 function ProfileTabs({navigation}) {
   return (
-    <TabNav.Navigator>
+    <TabNav.Navigator initialRouteName="Profile">
       <TabNav.Screen name="Profile" component={Profile} />
       <TabNav.Screen name="Followers" component={Profile} />
       <TabNav.Screen name="Following" component={Profile} />

@@ -76,6 +76,7 @@ export default class LoginPage extends Component {
     };
     global.AuthToken = '';
     global.LoggedIn = false;
+    global.LogInToken = '';
   }
   // var authentication = '';
   changeScreen() {
@@ -101,6 +102,11 @@ export default class LoginPage extends Component {
       });
       console.log(this.state.authenticationToken);
       global.AuthToken = this.state.authenticationToken;
+
+      global.LogInToken = responseJson.id;
+
+      console.log(global.LogInToken);
+
       console.log('The global variable = ' + global.AuthToken);
       if (this.state.authenticationToken !== null) {
         myBool = true;
