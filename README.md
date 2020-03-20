@@ -5,7 +5,7 @@ This is my Year-3 Mobile Application Development project. This project is to hel
 In this app, the functionality comes from a pre built back-end API that was provided to us by our tutor. From this API, my goal was to implement as many endpoints from the API that I could have. For instance, the ability to POST a 'Chit'. This readme will cover each page that I have created in-depth, and will include a instruction guide on how to use the program.
 
 # 2. Installation
-If you **dont** have node.js installed, then carry on reading this section. Otherwise please move down to section [2.2](#here).
+If you **dont** have node.js installed, then carry on reading this section. Otherwise please move down to section [2.2](#23-installing-nodejs).
 ## 2.1 Installing [Chocolatey](https://chocolatey.org/docs/installation)
 This package will simplify installing the necessary things needed to create a react-native app! If you are on an administrative account on your computer then enter the following lines into your desired terminal.
 ### CMD
@@ -31,4 +31,4 @@ or
 choco -?
 ```
 in your terminal, and if installed, it will display the getting started instructions.
-## here
+## 2.3 Installing Node.js
